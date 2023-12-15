@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void parcer(char *str,double x);
 void to_number(char *str, double *num);
 
 enum types {
@@ -34,6 +33,7 @@ typedef struct stack {
   double num;
   int priority;
   int type;
+  char symbol;
   struct stack *next_operators;
 } stack;
 
