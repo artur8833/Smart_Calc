@@ -4,8 +4,8 @@ int char_is_number(char c);
 void parcer(char *str,stack **head_stack,double x);
 void append(stack ** phead, double num, int priority,int type,char symbol);
 double pop( stack **phead);
-void reverse_stack(stack *head,  stack **result);
 void parce_operators (char *str,int *i, stack **head);
+void convert_in_APN(stack *head, stack *support);
 
 
 void print(stack *head){
@@ -37,19 +37,17 @@ double pop(stack **phead){
     return res;
 }
 
-void reverse_stack(stack *head,  stack **result){
-    while(head!=NULL){
-        append(result,head->num,head->priority,head->type,head->symbol);
-        pop(&head);
-    }
-}
-
 int s21_calculator(char *str,double x){
     stack *head_stack=NULL;
     stack *support=NULL;
 
     if(strlen(str)!=0){
         parcer(str,&head_stack,x);
+        // printf("head_stack_after_parce\n");
+        // print(head_stack);
+        convert_in_APN(head_stack,support);
+        printf("head_stack\n");
+        print(head_stack);
     }
 }
 
@@ -77,14 +75,70 @@ void parcer(char *str,stack **head_stack,double x){
         }
 
     }
-    stack *reverses_stack=NULL;
-    reverse_stack(*head_stack,&reverses_stack);
-    print(reverses_stack);
+
+    
     //printf("num==%f\n",head_stack->num);
     //printf("num==%d\n",head_stack->next_operators->priority);
 }
 
+void convert_in_APN(stack *head, stack *support){
+    stack *reverses_stack=NULL;
+    
+    while(head!=NULL){ //переворачиваю стек
+        append(&reverses_stack,head->num,head->priority,head->type,head->symbol);
+        pop(&head);
+    }
 
+    while(&reverses_stack!=NULL){ // иду по перевернутому стеку
+        if(reverses_stack->type==0) // если приходит число то добавляю его в основной стек и убираю из перевернутого
+        {
+            //printf("num==%f\n",reverses_stack->num);
+            append(&head,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
+            pop(&reverses_stack);
+        }
+        else
+        {
+            if(support==NULL){ //если вспомогательный стек пуст то добавляю в него первый символ 
+                //printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
+                append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
+                pop(&reverses_stack);
+            }
+            else  if(reverses_stack->type!=8){ // если не встретилась закрывающаяся скобка
+                //printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
+                while((reverses_stack->priority)<=(support->priority)){ // если приоритет символа который лежит в стеке меньше или равено текущему до достаю его в основной стек 
+                    append(&head,support->num,support->priority,support->type,support->symbol);
+                    pop(&support);
+                }
+                append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol); // добавляю в вспомагательный стек текущий символ
+                pop(&reverses_stack);
+            }
+            else  if(reverses_stack->type==8){ // если скобка закрывающаяся
+                printf("donneeeee\n");
+
+                while (support->type!=7) //пока не встретим открытую скобку переносим все из стека в основной стек
+                {
+                    append(&head,support->num,support->priority,support->type,support->symbol);
+                    pop(&support);
+                }
+                pop(&support); // удаляем открытую скобку 
+            }
+        }
+
+        // printf("head\n");
+        // print(head);
+    }
+
+    while(support!=NULL)
+    {
+        append(&head,support->num,support->priority,support->type,support->symbol);
+        pop(&support);
+    }
+    printf("head_end\n");
+    print(head);
+    // printf("End_reverce_stack\n");
+    // print(reverses_stack);
+
+}
 
 void parce_operators (char *str,int *i, stack **head){
 
@@ -156,7 +210,8 @@ void to_number(char *str, double *num) {
 }
 
 int main(){ 
-    char str[]="2+4+3-cos(7*4)";
+    //char str[]="2+4+3-cos(7*4)";
+    char str[]="2+4";
     s21_calculator(str,0);
     return 0;
 }
