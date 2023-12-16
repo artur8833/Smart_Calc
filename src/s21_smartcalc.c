@@ -89,31 +89,41 @@ void convert_in_APN(stack *head, stack *support){
         pop(&head);
     }
 
-    while(&reverses_stack!=NULL){ // иду по перевернутому стеку
+    printf("reverses_stack\n");
+    print(reverses_stack);
+
+    while(reverses_stack!=NULL){ // иду по перевернутому стеку
+        // printf("num==%f\n",reverses_stack->num);
         if(reverses_stack->type==0) // если приходит число то добавляю его в основной стек и убираю из перевернутого
         {
-            //printf("num==%f\n",reverses_stack->num);
+            printf("num==%f\n",reverses_stack->num);
             append(&head,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
             pop(&reverses_stack);
         }
         else
         {
             if(support==NULL){ //если вспомогательный стек пуст то добавляю в него первый символ 
-                //printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
+                printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
                 append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
                 pop(&reverses_stack);
             }
             else  if(reverses_stack->type!=8){ // если не встретилась закрывающаяся скобка
-                //printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
+                printf("support\n");
+                print(support);
+                printf("rev\n");
+                print(reverses_stack);
                 while((reverses_stack->priority)<=(support->priority)){ // если приоритет символа который лежит в стеке меньше или равено текущему до достаю его в основной стек 
+                    printf("123333\n");
                     append(&head,support->num,support->priority,support->type,support->symbol);
+                    printf("55555\n");
                     pop(&support);
+                    printf("88888\n");
                 }
+
                 append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol); // добавляю в вспомагательный стек текущий символ
                 pop(&reverses_stack);
             }
             else  if(reverses_stack->type==8){ // если скобка закрывающаяся
-                printf("donneeeee\n");
 
                 while (support->type!=7) //пока не встретим открытую скобку переносим все из стека в основной стек
                 {
@@ -133,6 +143,7 @@ void convert_in_APN(stack *head, stack *support){
         append(&head,support->num,support->priority,support->type,support->symbol);
         pop(&support);
     }
+
     printf("head_end\n");
     print(head);
     // printf("End_reverce_stack\n");
@@ -211,7 +222,7 @@ void to_number(char *str, double *num) {
 
 int main(){ 
     //char str[]="2+4+3-cos(7*4)";
-    char str[]="2+4";
+    char str[]="2+4+3";
     s21_calculator(str,0);
     return 0;
 }
