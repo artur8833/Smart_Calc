@@ -1,5 +1,4 @@
 #include "s21_smartcalc.h"
-#include <math.h>
 
 double s21_calculator(char *str,double x);
 int char_is_number(char c);
@@ -7,7 +6,7 @@ void parcer(char *str,stack **head_stack,double x);
 void append(stack ** phead, double num, int priority,int type,char symbol);
 double pop( stack **phead);
 void parce_operators (char *str,int *i, stack **head);
-void convert_in_APN(stack *head, stack **result);
+void convert_in_RPN(stack **head, stack **result);
 void removeStack(stack** support, stack** head , int current_priority);
 double calculation(stack **rpn);
 stack *reverse_stack(stack *original);
@@ -50,7 +49,7 @@ double s21_calculator(char *str,double x){
         parcer(str,&head_stack,x);
         // printf("head_stack_after_parce\n");
         // print(head_stack);
-        convert_in_APN(head_stack,&rpn);
+        convert_in_RPN(&head_stack,&rpn);
         result=calculation(&rpn);
         // print(rpn);
     }
@@ -64,6 +63,7 @@ void parcer(char *str,stack **head_stack,double x){
     int j=0;
     double num=0;
     for (int i=0; i<len; i++){
+        //printf("str[%d]==%c\n",i,str[i]);
         while (char_is_number(str[i])){
             numbers_buf[j]=str[i];
             j++;
@@ -75,6 +75,9 @@ void parcer(char *str,stack **head_stack,double x){
             memset(&numbers_buf, 0, sizeof(numbers_buf));
             j=0;
         }
+        if (str[i] == 'x' || str[i] == 'X') {
+            append(head_stack,x,0,NUMBERS,' ');
+        }
         
         if(strchr(operators_mas, str[i]) != NULL){
             parce_operators(str,&i,head_stack);
@@ -83,20 +86,84 @@ void parcer(char *str,stack **head_stack,double x){
     }
 }
 
-void convert_in_APN(stack *head, stack **result)
+void parce_operators (char *str,int *i, stack **head){
+
+    if(str[*i]=='+'){
+        append(head,0,1,PLUS,'+');
+    }
+    if (str[*i]=='-'){
+        append(head,0,1,MINUS,'-');
+    }
+    if (str[*i]=='*'){
+        append(head,0,2,MULT,'*');
+    }
+    if (str[*i]=='/'){
+        append(head,0,2,DIV,'/');
+    }
+    if (str[*i]=='^'){
+        append(head,0,3,EXP,'^');
+    }
+    if (str[*i] == 'm' && str[*i + 1] == 'o' && str[*i + 2] == 'd'){
+        *i=*i+2;
+        append(head,0,3,MOD,'m');
+    }
+    if (str[*i] == 'c' && str[*i + 1] == 'o' && str[*i + 2] == 's'){
+         *i=*i+2;
+        append(head,0,4,COS,'c');
+    }
+    if (str[*i] == 's' && str[*i + 1] == 'i' && str[*i + 2] == 'n'){
+        *i=*i+2;
+        append(head,0,4,SIN,'s');
+    }
+    if (str[*i] == 't' && str[*i + 1] == 'a' && str[*i + 2] == 'n'){
+         *i=*i+2;
+        append(head,0,4,TAN,'t');
+    }
+    if (str[*i] == 'a' && str[*i + 1] == 'c' && str[*i + 2] == 'o' && str[*i + 3] == 's'){
+        *i=*i+3;
+        append(head,0,4,ACOS,'C');
+    }
+    if (str[*i] == 'a' && str[*i+1] == 's' && str[*i+2] == 'i' && str[*i+3] == 'n'){
+        *i=*i+3;
+        append(head,0,4,ASIN,'S');
+    }
+    if (str[*i] == 'a' && str[*i + 1] == 't' && str[*i + 2] == 'a' && str[*i + 3] == 'n'){
+        *i=*i+3;
+        append(head,0,4,ATAN,'T');
+    }
+    if (str[*i] == 's' && str[*i + 1] == 'q' && str[*i + 2] == 'r' && str[*i + 3] == 't'){
+        *i=*i+3;
+        append(head,0,4,SQRT,'Q');
+    }
+    if (str[*i] == 'l' && str[*i + 1] == 'n'){
+        *i=*i+1;
+        append(head,0,4,LN,'L');
+    }
+    if (str[*i] == 'l' && str[*i + 1] == 'o' && str[*i + 2] == 'g'){
+        *i=*i+2;
+        append(head,0,4,LOG,'g');
+    }
+    if (str[*i] == '('){
+        append(head,0,1,BRAC_OPEN,'(');
+    }
+    if (str[*i] == ')'){
+        append(head,0,1,BRAC_CLOSE,')');
+    }
+}
+
+void convert_in_RPN(stack **head, stack **result)
 {
-    stack *reverses_stack=NULL;
+    stack *reverses_stack=reverse_stack(*head);
     stack *support=NULL;
 
-    while(head!=NULL){ //переворачиваю стек
-        append(&reverses_stack,head->num,head->priority,head->type,head->symbol);
-        pop(&head);
-    }
+    printf("reverses_stack\n");
+    print(reverses_stack);
 
     while(reverses_stack!=NULL){ // иду по перевернутому стеку
-
+        
         if(reverses_stack->type==0) // если приходит число то добавляю его в основной стек и убираю из перевернутого
         {
+            
             append(result,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
             pop(&reverses_stack);
 
@@ -104,17 +171,15 @@ void convert_in_APN(stack *head, stack **result)
         else
         {
             if(support==NULL){ //если вспомогательный стек пуст то добавляю в него первый символ 
-
                 append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
                 pop(&reverses_stack);
-
             }
             else  if(reverses_stack->type!=8){ // если не встретилась закрывающаяся скобка
-
                 append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol); // добавляю в вспомагательный стек текущий символ
                 pop(&reverses_stack);
-
+                
                 if((support->type!=7)){
+                    
                     removeStack(&support->next_operators,result,support->priority);
                 }
 
@@ -127,31 +192,30 @@ void convert_in_APN(stack *head, stack **result)
                 
             }
             else  if(reverses_stack->type==8){ // если скобка закрывающаяся 
-
+               
                 pop(&reverses_stack);
-
-                while (support!=NULL)
+                //print(support);
+                while ((support!=NULL))
                 {
+                    if(support->type==7)
+                    {
+                        pop(&support);
+                        break;
+                    }
+
                     append(result,support->num,support->priority,support->type,support->symbol);
                     pop(&support);
-
-                    if(support->type==7){
-                    pop(&support);
-                    break;
-                    }
                 }
  
             }
         }
     }
+
     while(support!=NULL)
     {
         append(result,support->num,support->priority,support->type,support->symbol);
         pop(&support);
     }
-
-    // printf("End_reverce_stack\n");
-    // print(reverses_stack);
 
 }
 
@@ -195,60 +259,7 @@ void removeStack(stack** support, stack** head , int current_priority) {
 
 
 
-void parce_operators (char *str,int *i, stack **head){
 
-    if(str[*i]=='+'){
-        append(head,0,1,PLUS,'+');
-    }
-    if (str[*i]=='-'){
-        append(head,0,1,MINUS,'-');
-    }
-    if (str[*i]=='*'){
-        append(head,0,2,MULT,'*');
-    }
-    if (str[*i]=='/'){
-        append(head,0,2,DIV,'/');
-    }
-    if (str[*i]=='^'){
-        append(head,0,3,EXP,'^');
-    }
-    if (str[*i] == 'm' && str[*i + 1] == 'o' && str[*i + 2] == 'd'){
-        append(head,0,3,MOD,'m');
-    }
-    if (str[*i] == 'c' && str[*i + 1] == 'o' && str[*i + 2] == 's'){
-        append(head,0,4,COS,'c');
-    }
-    if (str[*i] == 's' && str[*i + 1] == 'i' && str[*i + 2] == 'n'){
-        append(head,0,4,SIN,'s');
-    }
-    if (str[*i] == 't' && str[*i + 1] == 'a' && str[*i + 2] == 'n'){
-        append(head,0,4,TAN,'t');
-    }
-    if (str[*i] == 'a' && str[*i + 1] == 'c' && str[*i + 2] == 'o' && str[*i + 3] == 's'){
-        append(head,0,4,ACOS,'C');
-    }
-    if (str[*i] == 'a' && str[*i + 1] == 's' && str[*i + 2] == 'i' && str[*i + 3] == 'n'){
-        append(head,0,4,ASIN,'S');
-    }
-    if (str[*i] == 'a' && str[*i + 1] == 't' && str[*i + 2] == 'a' && str[*i + 3] == 'n'){
-        append(head,0,4,ATAN,'T');
-    }
-    if (str[*i] == 's' && str[*i + 1] == 'q' && str[*i + 2] == 'r' && str[*i + 3] == 't'){
-        append(head,0,4,SQRT,'Q');
-    }
-    if (str[*i] == 'l' && str[*i + 1] == 'n'){
-        append(head,0,4,LN,'L');
-    }
-    if (str[*i] == 'l' && str[*i + 1] == 'o' && str[*i + 2] == 'g'){
-        append(head,0,4,LOG,'g');
-    }
-    if (str[*i] == '('){
-        append(head,0,1,BRAC_OPEN,'(');
-    }
-    if (str[*i] == ')'){
-        append(head,0,1,BRAC_CLOSE,')');
-    }
-}
 
 stack *reverse_stack(stack *original){
     stack *reverse=NULL;
@@ -264,9 +275,8 @@ double calculation(stack **rpn){
     stack *support=NULL;
     double n1,n2,res=0;
 
-    // printf("rpn_reverse_stack\n");
-    // print(rpn_reverse_stack);
-    // printf("\n");
+    printf("rpn_reverse_stack\n");
+    print(rpn_reverse_stack);
 
     while(rpn_reverse_stack!=NULL){
         //print(support);
@@ -281,12 +291,12 @@ double calculation(stack **rpn){
             pop(&rpn_reverse_stack);
         }
         else{
-            if((rpn_reverse_stack->priority==1)||(rpn_reverse_stack->priority==2)||rpn_reverse_stack->priority==3){
+            if((rpn_reverse_stack->priority==1)||(rpn_reverse_stack->priority==2)||(rpn_reverse_stack->priority==3)){
                 n2=support->num;
                 pop(&support);
                 n1=support->num;
                 pop(&support);
-                res=calculate(n2,n1,rpn_reverse_stack->symbol);
+                res=calculate(n1,n2,rpn_reverse_stack->symbol);
                 append(&support,res,0,NUMBERS,' ');
                 pop(&rpn_reverse_stack);
             }
@@ -312,6 +322,8 @@ double calculate(double a1, double a2, char operator){
         result=a1+a2;
     }
     else if(operator=='-'){
+        printf("a1==%f\n",a1);
+        printf("a2==%f\n",a2);
         result=a1-a2;
     }
     else if(operator=='*'){
@@ -373,7 +385,8 @@ void to_number(char *str, double *num) {
 int main(){ 
     //char str[]="2+4+3-cos(7*4)";
 
-    char str[]="2*3+cos(3+4*3)-atan(8)";
+    char str[]="2+3*(2+(cos(1+3*4)))";
+    //char str[]="asin(0.6)+1";
     double num=s21_calculator(str,0);
     printf("num==%f\n", num);
 
