@@ -1,18 +1,5 @@
 #include "s21_smartcalc.h"
 
-double s21_calculator(char *str,double x);
-int char_is_number(char c);
-void parcer(char *str,stack **head_stack,double x);
-void append(stack ** phead, double num, int priority,int type,char symbol);
-double pop( stack **phead);
-void parce_operators (char *str,int *i, stack **head);
-void convert_in_RPN(stack **head, stack **result);
-void removeStack(stack** support, stack** head , int current_priority);
-double calculation(stack **rpn);
-stack *reverse_stack(stack *original);
-double calculate(double a1, double a2, char operator);
-
-
 void print(stack *head){
     for (stack *p=head;p!=NULL;p=p->next_operators){
         printf("%f ", p->num);
@@ -156,17 +143,17 @@ void convert_in_RPN(stack **head, stack **result)
     stack *reverses_stack=reverse_stack(*head);
     stack *support=NULL;
 
-    printf("reverses_stack\n");
-    print(reverses_stack);
-
+    // printf("reverses_stack\n");
+    // print(reverses_stack);
     while(reverses_stack!=NULL){ // иду по перевернутому стеку
-        
+        //printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
         if(reverses_stack->type==0) // если приходит число то добавляю его в основной стек и убираю из перевернутого
         {
-            
             append(result,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol);
             pop(&reverses_stack);
-
+        }
+        else if((*result==NULL)&&(reverses_stack->symbol=='-')){ //если результат пуст то добавляю 0 чтобы обработать -9 в самом начале
+            append(result,0,0,NUMBERS,' ');
         }
         else
         {
@@ -175,11 +162,14 @@ void convert_in_RPN(stack **head, stack **result)
                 pop(&reverses_stack);
             }
             else  if(reverses_stack->type!=8){ // если не встретилась закрывающаяся скобка
+                if((reverses_stack->symbol=='(')&&(reverses_stack->next_operators->symbol=='-')){ // если в скобки перый символ -, то добавляю 0
+                    append(result,0,0,NUMBERS,' ');
+                }
+
                 append(&support,reverses_stack->num,reverses_stack->priority,reverses_stack->type,reverses_stack->symbol); // добавляю в вспомагательный стек текущий символ
                 pop(&reverses_stack);
-                
+
                 if((support->type!=7)){
-                    
                     removeStack(&support->next_operators,result,support->priority);
                 }
 
@@ -206,7 +196,6 @@ void convert_in_RPN(stack **head, stack **result)
                     append(result,support->num,support->priority,support->type,support->symbol);
                     pop(&support);
                 }
- 
             }
         }
     }
@@ -216,6 +205,7 @@ void convert_in_RPN(stack **head, stack **result)
         append(result,support->num,support->priority,support->type,support->symbol);
         pop(&support);
     }
+    // print(*result);
 
 }
 
@@ -258,9 +248,6 @@ void removeStack(stack** support, stack** head , int current_priority) {
 }
 
 
-
-
-
 stack *reverse_stack(stack *original){
     stack *reverse=NULL;
     while(original!=NULL){ //переворачиваю стек
@@ -275,8 +262,8 @@ double calculation(stack **rpn){
     stack *support=NULL;
     double n1,n2,res=0;
 
-    printf("rpn_reverse_stack\n");
-    print(rpn_reverse_stack);
+    // printf("rpn_reverse_stack\n");
+    // print(rpn_reverse_stack);
 
     while(rpn_reverse_stack!=NULL){
         //print(support);
@@ -311,6 +298,10 @@ double calculation(stack **rpn){
 
         //printf("res===%f\n",res);
     }
+    if(support!=NULL){
+        res=support->num;
+        pop(&support);
+    }
     // printf("res===%f\n",res);
 
     return res;
@@ -322,8 +313,6 @@ double calculate(double a1, double a2, char operator){
         result=a1+a2;
     }
     else if(operator=='-'){
-        printf("a1==%f\n",a1);
-        printf("a2==%f\n",a2);
         result=a1-a2;
     }
     else if(operator=='*'){
@@ -356,7 +345,7 @@ double calculate(double a1, double a2, char operator){
     else if(operator=='T'){
         result=atan(a1);
     }
-    else if(operator=='q'){
+    else if(operator=='Q'){
         result=sqrt(a1);
     }
     else if(operator=='L'){
@@ -382,41 +371,41 @@ void to_number(char *str, double *num) {
   *num = atof(str);
 }
 
-int main(){ 
-    //char str[]="2+4+3-cos(7*4)";
+// int main(){ 
+//     //char str[]="2+4+3-cos(7*4)";
 
-    char str[]="2+3*(2+(cos(1+3*4)))";
-    //char str[]="asin(0.6)+1";
-    double num=s21_calculator(str,0);
-    printf("num==%f\n", num);
+//     char str[]="5";
+//     //char str[]="asin(0.6)+1";
+//     double num=s21_calculator(str,0);
+//     printf("num==%f\n", num);
 
 
-    // stack* support = NULL;
-    // stack* head = NULL;
-    // append(&head,2,0,0,' ');
-    // append(&head,3,0,0,' ');
-    // append(&head,0,2,3,'*');
-    // append(&head,3,0,0,' ');
-    // append(&support,0,1,1,'+');
-    // append(&support,0,4,9,'c');
-    // append(&support,0,1,7,'(');
-    // append(&support,0,1,1,'+');
+//     // stack* support = NULL;
+//     // stack* head = NULL;
+//     // append(&head,2,0,0,' ');
+//     // append(&head,3,0,0,' ');
+//     // append(&head,0,2,3,'*');
+//     // append(&head,3,0,0,' ');
+//     // append(&support,0,1,1,'+');
+//     // append(&support,0,4,9,'c');
+//     // append(&support,0,1,7,'(');
+//     // append(&support,0,1,1,'+');
 
-    // printf("\n");
-    // print(support);
-    // print(head);
+//     // printf("\n");
+//     // print(support);
+//     // print(head);
 
-    // append(&support,0,2,3,'*');
+//     // append(&support,0,2,3,'*');
     
-    // printf("\n");
-    // print(support);
-    // print(head);
+//     // printf("\n");
+//     // print(support);
+//     // print(head);
     
-    // removeStack(&support->next_operators,&head,support->priority);
+//     // removeStack(&support->next_operators,&head,support->priority);
     
-    // printf("\n");
-    // print(support);
-    // print(head);
+//     // printf("\n");
+//     // print(support);
+//     // print(head);
 
-    return 0;
-}
+//     return 0;
+// }

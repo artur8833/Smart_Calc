@@ -6,6 +6,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct stack {
+  double num;
+  int priority;
+  int type;
+  char symbol;
+  struct stack *next_operators;
+} stack;
+
+
+double s21_calculator(char *str,double x);
+int char_is_number(char c);
+void parcer(char *str,stack **head_stack,double x);
+void append(stack ** phead, double num, int priority,int type,char symbol);
+double pop(stack **phead);
+void parce_operators (char *str,int *i, stack **head);
+void convert_in_RPN(stack **head, stack **result);
+void removeStack(stack** support, stack** head , int current_priority);
+double calculation(stack **rpn);
+stack *reverse_stack(stack *original);
+double calculate(double a1, double a2, char operator);
 void to_number(char *str, double *num);
 
 enum types {
@@ -29,13 +49,6 @@ enum types {
   LOG=17
 };
 
-typedef struct stack {
-  double num;
-  int priority;
-  int type;
-  char symbol;
-  struct stack *next_operators;
-} stack;
 
 
 #endif
