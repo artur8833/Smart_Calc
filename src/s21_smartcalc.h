@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define OK 0
+#define ERROR 1
+
 typedef struct stack {
   double num;
   int priority;
@@ -27,6 +30,12 @@ double calculation(stack **rpn);
 stack *reverse_stack(stack *original);
 double calculate(double a1, double a2, char operator);
 void to_number(char *str, double *num);
+
+int validation(char *str);
+int incorrect_fuc(char *str);
+int incorrect_brackets(char *str);
+int incorrect_dot(char *str);
+int incorrect_signs(char *str);
 
 enum types {
   NUMBERS=0,

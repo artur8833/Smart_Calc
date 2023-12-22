@@ -256,159 +256,159 @@ START_TEST(case_36) {
 }
 END_TEST
 
-// START_TEST(case_extra_parenthesis) {
-//   char expression[255] = "sin(X)^2+cos(X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_extra_parenthesis) {
+  char expression[255] = "sin(X)^2+cos(X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_empty_parenthesis_1) {
-//   char expression[255] = "()";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_empty_parenthesis_1) {
+  char expression[255] = "()";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_empty_parenthesis_2) {
-//   char expression[255] = "sin()";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_empty_parenthesis_2) {
+  char expression[255] = "sin()";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_number_1) {
-//   char expression[255] = "2.2324.243+5";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_number_1) {
+  char expression[255] = "2.2324.243+5";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_number_2) {
-//   char expression[255] = "53435.345-2";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_number_2) {
+  char expression[255] = "53435..345-2";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_number_3) {
-//   char expression[255] = ".-2";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_number_3) {
+  char expression[255] = ".-2";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_1) {
-//   char expression[255] = "sim(1)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_1) {
+  char expression[255] = "sim(1)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_2) {
-//   char expression[255] = "sin(X)^2+cosX)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_2) {
+  char expression[255] = "sin(X)^2+cosX)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_3) {
-//   char expression[255] = "sin(X)^2+cos*X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_3) {
+  char expression[255] = "sin(X)^2+cos*X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_4) {
-//   char expression[255] = "sin+X^2+cos(X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_4) {
+  char expression[255] = "sin+X^2+cos(X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_5) {
-//   char expression[255] = "ton(X)^2+cos(X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_5) {
+  char expression[255] = "ton(X)^2+cos(X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_6) {
-//   char expression[255] = "acos(X)^2+aspos(X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_6) {
+  char expression[255] = "acos(X)^2+aspos(X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_7) {
-//   char expression[255] = "asin-X)^2+cos(X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_7) {
+  char expression[255] = "asin-X)^2+cos(X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_8) {
-//   char expression[255] = "sqrt(*X)^2+cos(X)^2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_8) {
+  char expression[255] = "sqrt(*X)^2+cos(X)^2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_9) {
-//   char expression[255] = "10 mod )";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_9) {
+  char expression[255] = "10 mod )";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_10) {
-//   char expression[255] = "tan(1) *+ 2";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_10) {
+  char expression[255] = "tan(1) *+ 2";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_11) {
-//   char expression[255] = "atan(1) ^/ 2";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_11) {
+  char expression[255] = "atan(1) ^/ 2";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_12) {
-//   char expression[255] = "log(10+)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_12) {
+  char expression[255] = "log(10+)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_13) {
-//   char expression[255] = "log(X/)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_13) {
+  char expression[255] = "log(X/)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_14) {
-//   char expression[255] = "4x*2)";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_14) {
+  char expression[255] = "4x*2)";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_15) {
-//   char expression[255] = "+";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_15) {
+  char expression[255] = "+";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
-// START_TEST(case_incorrect_function_16) {
-//   char expression[255] = "hello";
-//   int is_correct = validation(expression);
-//   ck_assert_int_eq(is_correct, 0);
-// }
-// END_TEST
+START_TEST(case_incorrect_function_16) {
+  char expression[255] = "hello";
+  int is_correct = validation(expression);
+  ck_assert_int_eq(is_correct, 1);
+}
+END_TEST
 
 
 
@@ -452,28 +452,28 @@ Suite *smartcalc_test() {
   tcase_add_test(tc_1, case_34);
   tcase_add_test(tc_1, case_35);
   tcase_add_test(tc_1, case_36);
-//   tcase_add_test(tc_1, case_extra_parenthesis);
-//   tcase_add_test(tc_1, case_empty_parenthesis_1);
-//   tcase_add_test(tc_1, case_empty_parenthesis_2);
-//   tcase_add_test(tc_1, case_incorrect_number_1);
-//   tcase_add_test(tc_1, case_incorrect_number_2);
-//   tcase_add_test(tc_1, case_incorrect_number_3);
-//   tcase_add_test(tc_1, case_incorrect_function_1);
-//   tcase_add_test(tc_1, case_incorrect_function_2);
-//   tcase_add_test(tc_1, case_incorrect_function_3);
-//   tcase_add_test(tc_1, case_incorrect_function_4);
-//   tcase_add_test(tc_1, case_incorrect_function_5);
-//   tcase_add_test(tc_1, case_incorrect_function_6);
-//   tcase_add_test(tc_1, case_incorrect_function_7);
-//   tcase_add_test(tc_1, case_incorrect_function_8);
-//   tcase_add_test(tc_1, case_incorrect_function_9);
-//   tcase_add_test(tc_1, case_incorrect_function_10);
-//   tcase_add_test(tc_1, case_incorrect_function_11);
-//   tcase_add_test(tc_1, case_incorrect_function_12);
-//   tcase_add_test(tc_1, case_incorrect_function_13);
-//   tcase_add_test(tc_1, case_incorrect_function_14);
-//   tcase_add_test(tc_1, case_incorrect_function_15);
-//   tcase_add_test(tc_1, case_incorrect_function_16);
+  tcase_add_test(tc_1, case_extra_parenthesis);
+  tcase_add_test(tc_1, case_empty_parenthesis_1);
+  tcase_add_test(tc_1, case_empty_parenthesis_2);
+  tcase_add_test(tc_1, case_incorrect_number_1);
+  tcase_add_test(tc_1, case_incorrect_number_2);
+  tcase_add_test(tc_1, case_incorrect_number_3);
+  tcase_add_test(tc_1, case_incorrect_function_1);
+  tcase_add_test(tc_1, case_incorrect_function_2);
+  tcase_add_test(tc_1, case_incorrect_function_3);
+  tcase_add_test(tc_1, case_incorrect_function_4);
+  tcase_add_test(tc_1, case_incorrect_function_5);
+  tcase_add_test(tc_1, case_incorrect_function_6);
+  tcase_add_test(tc_1, case_incorrect_function_7);
+  tcase_add_test(tc_1, case_incorrect_function_8);
+  tcase_add_test(tc_1, case_incorrect_function_9);
+  tcase_add_test(tc_1, case_incorrect_function_10);
+  tcase_add_test(tc_1, case_incorrect_function_11);
+  tcase_add_test(tc_1, case_incorrect_function_12);
+  tcase_add_test(tc_1, case_incorrect_function_13);
+  tcase_add_test(tc_1, case_incorrect_function_14);
+  tcase_add_test(tc_1, case_incorrect_function_15);
+  tcase_add_test(tc_1, case_incorrect_function_16);
 
   return s;
 }
