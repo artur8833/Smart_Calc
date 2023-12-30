@@ -31,6 +31,25 @@ gcov_report: object lib test
 	~/.local/bin/gcovr -r . --html --html-details -o s21_smartcalc.html
 	open s21_smartcalc.html
 
+install: uninstall
+	make clean
+	mkdir build
+	cd SmartCalc && qmake && make && make clean && rm Makefile && cd ../ && mv SmartCalc/SmarttCalc.app build
+
+uninstall:
+	rm -rf build*
+
+dist:
+	rm -rf Archive_SmartCalc_v1.0/
+	mkdir Archive_SmartCalc_v1.0/
+	mkdir Archive_SmartCalc_v1.0/src
+	mv ./build/SmarttCalc.app Archive_SmartCalc_v1.0/src/
+	tar cvzf Archive_SmartCalc_v1.0.tgz Archive_SmartCalc_v1.0/
+	rm -rf Archive_SmartCalc_v1.0/
+
+dvi:
+	open ../README_RUS.md
+
 clean:
 	rm -f *.o
 	rm -f *.a

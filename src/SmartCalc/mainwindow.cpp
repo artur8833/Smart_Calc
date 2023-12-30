@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_acos,SIGNAL(clicked()),this,SLOT(digits_numbers()));
     connect(ui->pushButton_asin,SIGNAL(clicked()),this,SLOT(digits_numbers()));
     connect(ui->pushButton_atan,SIGNAL(clicked()),this,SLOT(digits_numbers()));
+    connect(ui->pushButton_tan,SIGNAL(clicked()),this,SLOT(digits_numbers()));
+    connect(ui->pushButton_sqrt,SIGNAL(clicked()),this,SLOT(digits_numbers()));
 
     connect(ui->pushButton_sum,SIGNAL(clicked()),this,SLOT(digits_numbers()));
     connect(ui->pushButton_sub,SIGNAL(clicked()),this,SLOT(digits_numbers()));
