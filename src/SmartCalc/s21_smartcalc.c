@@ -269,7 +269,13 @@ double calculation(stack **rpn) {
   // print(rpn_reverse_stack);
 
   while (rpn_reverse_stack != NULL) {
-    
+    // print(support);
+    // printf("rpn_reverse_stack->symbol==%c\n\n",rpn_reverse_stack->symbol);
+    // printf("rpn_reverse_stack->priority==%d\n\n",rpn_reverse_stack->priority);
+
+    // printf("rpn_reverse_stack\n");
+    // print(rpn_reverse_stack);
+
     if (rpn_reverse_stack->type == 0) {
       append(&support, rpn_reverse_stack->num, rpn_reverse_stack->priority,
              rpn_reverse_stack->type, rpn_reverse_stack->symbol);
@@ -305,37 +311,37 @@ double calculation(stack **rpn) {
   return res;
 }
 
-double calculate(double a1, double a2, char operator) {
+double calculate(double a1, double a2, char symb) {
   double result = 0;
-  if (operator== '+') {
+  if (symb== '+') {
     result = a1 + a2;
-  } else if (operator== '-') {
+  } else if (symb== '-') {
     result = a1 - a2;
-  } else if (operator== '*') {
+  } else if (symb== '*') {
     result = a1 * a2;
-  } else if (operator== '/') {
+  } else if (symb== '/') {
     result = a1 / a2;
-  } else if (operator== '^') {
+  } else if (symb== '^') {
     result = pow(a1, a2);
-  } else if (operator== 'm') {
+  } else if (symb== 'm') {
     result = fmod(a1, a2);
-  } else if (operator== 'c') {
+  } else if (symb== 'c') {
     result = cos(a1);
-  } else if (operator== 's') {
+  } else if (symb== 's') {
     result = sin(a1);
-  } else if (operator== 't') {
+  } else if (symb== 't') {
     result = tan(a1);
-  } else if (operator== 'C') {
+  } else if (symb== 'C') {
     result = acos(a1);
-  } else if (operator== 'S') {
+  } else if (symb== 'S') {
     result = asin(a1);
-  } else if (operator== 'T') {
+  } else if (symb== 'T') {
     result = atan(a1);
-  } else if (operator== 'Q') {
+  } else if (symb== 'Q') {
     result = sqrt(a1);
-  } else if (operator== 'L') {
+  } else if (symb== 'L') {
     result = log(a1);
-  } else if (operator== 'g') {
+  } else if (symb== 'g') {
     result = log10(a1);
   }
   return result;
