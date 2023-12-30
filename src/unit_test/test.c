@@ -1,7 +1,7 @@
 #include <check.h>
 #include <math.h>
 
-#include "../s21_smartcalc.h"
+#include "../SmartCalc/s21_smartcalc.h"
 
 START_TEST(case_1) {
   char expression[255] = "122.1+877.9";

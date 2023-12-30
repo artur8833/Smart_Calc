@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -std=c11
-MAIN_FILES= *.c 
+MAIN_FILES= SmartCalc/*.c 
 TEST_FILES=  unit_test/*.c
 CHECK_LINK= $(shell pkg-config --libs --cflags check)
 GCOVFLAGS= -fprofile-arcs -ftest-coverage
@@ -44,4 +44,4 @@ clean:
 	rm -rf *.info
 	rm -rf *.html
 	rm -rf *.css
-	rm -f ./s21_matrix_test
+	rm -f ./s21_smartcalc_test
