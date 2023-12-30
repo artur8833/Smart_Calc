@@ -48,7 +48,7 @@ dist:
 	rm -rf Archive_SmartCalc_v1.0/
 
 dvi:
-	open ../README_RUS.md
+	open ../instructions.md
 
 clean:
 	rm -f *.o
