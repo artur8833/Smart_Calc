@@ -132,11 +132,11 @@ int incorrect_fuc(char *str) {
     } else if (str[i] == 's' && str[i + 1] == 'q' && str[i + 2] == 'r' &&
                str[i + 3] == 't' && str[i + 4] == '(') {
       i += 4;
-    } else if (str[i] == 'l' && str[i + 1] == 'n' && str[i + 3] == '(') {
-      i += 3;
-    } else if (str[i] == 'm' && str[i + 1] == 'o' && str[i + 3] == 'd' &&
-               (strchr("0123456789 -", str[i + 3]) != NULL)) {
+    } else if (str[i] == 'l' && str[i + 1] == 'n' && str[i + 2] == '(') {
       i += 2;
+    } else if (str[i] == 'm' && str[i + 1] == 'o' && str[i + 2] == 'd' &&
+               (strchr("0123456789 -", str[i + 3]) != NULL)) {
+      i += 3;
     } else if ((strchr("+-*/^() xX", str[i]) == NULL) &&
                !char_is_number(str[i])) {
       res = ERROR;
