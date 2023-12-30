@@ -1,4 +1,5 @@
 #include "graphwidget.h"
+
 #include "ui_graphwidget.h"
 
 GraphWidget::GraphWidget(QWidget *parent)

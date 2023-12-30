@@ -313,35 +313,35 @@ double calculation(stack **rpn) {
 
 double calculate(double a1, double a2, char symb) {
   double result = 0;
-  if (symb== '+') {
+  if (symb == '+') {
     result = a1 + a2;
-  } else if (symb== '-') {
+  } else if (symb == '-') {
     result = a1 - a2;
-  } else if (symb== '*') {
+  } else if (symb == '*') {
     result = a1 * a2;
-  } else if (symb== '/') {
+  } else if (symb == '/') {
     result = a1 / a2;
-  } else if (symb== '^') {
+  } else if (symb == '^') {
     result = pow(a1, a2);
-  } else if (symb== 'm') {
+  } else if (symb == 'm') {
     result = fmod(a1, a2);
-  } else if (symb== 'c') {
+  } else if (symb == 'c') {
     result = cos(a1);
-  } else if (symb== 's') {
+  } else if (symb == 's') {
     result = sin(a1);
-  } else if (symb== 't') {
+  } else if (symb == 't') {
     result = tan(a1);
-  } else if (symb== 'C') {
+  } else if (symb == 'C') {
     result = acos(a1);
-  } else if (symb== 'S') {
+  } else if (symb == 'S') {
     result = asin(a1);
-  } else if (symb== 'T') {
+  } else if (symb == 'T') {
     result = atan(a1);
-  } else if (symb== 'Q') {
+  } else if (symb == 'Q') {
     result = sqrt(a1);
-  } else if (symb== 'L') {
+  } else if (symb == 'L') {
     result = log(a1);
-  } else if (symb== 'g') {
+  } else if (symb == 'g') {
     result = log10(a1);
   }
   return result;

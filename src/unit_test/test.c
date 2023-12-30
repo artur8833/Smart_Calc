@@ -217,8 +217,7 @@ START_TEST(case_31) {
 END_TEST
 
 START_TEST(case_32) {
-  char expression[255] =
-      "((4.625-13/18*9/26)/2*0.25+2*0.5/1.25/6*3/4)/53/68";
+  char expression[255] = "((4.625-13/18*9/26)/2*0.25+2*0.5/1.25/6*3/4)/53/68";
   double result = s21_calculator(expression, 0);
   ck_assert_double_eq_tol(result, 0.00017948806, 1e-7);
 }
@@ -409,8 +408,6 @@ START_TEST(case_incorrect_function_16) {
   ck_assert_int_eq(is_correct, 1);
 }
 END_TEST
-
-
 
 Suite *smartcalc_test() {
   Suite *s = suite_create("Calculator tests");

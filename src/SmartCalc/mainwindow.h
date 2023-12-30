@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <graphwidget.h>
+
 #include <QMainWindow>
 #include <QVector>
 
@@ -19,29 +20,27 @@ extern "C" {
 }
 #endif
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+ public:
+  MainWindow(QWidget *parent = nullptr);
+  ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
-    GraphWidget *graph;
+ private:
+  Ui::MainWindow *ui;
+  GraphWidget *graph;
 
  signals:
-   void signal(double Xmin, double Xmax, double Ymin, double Ymax, char *str);
+  void signal(double Xmin, double Xmax, double Ymin, double Ymax, char *str);
 
+ private slots:
+  void digits_numbers();
+  void on_pushButton_point_clicked();
+  void on_pushButton_ac_clicked();
+  void on_pushButton_del_clicked();
+  void on_pushButton_equals_clicked();
 
-private slots:
-    void digits_numbers();
-    void on_pushButton_point_clicked();
-    void on_pushButton_ac_clicked();
-    void on_pushButton_del_clicked();
-    void on_pushButton_equals_clicked();
-
-    void on_pushButton_graph_clicked();
+  void on_pushButton_graph_clicked();
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H
