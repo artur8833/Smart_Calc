@@ -481,7 +481,7 @@ int main(void) {
 
   SRunner *sr1 = srunner_create(s);
 
-  srunner_run_all(sr1, CK_NORMAL);  // CK_VERBOSE
+  srunner_run_all(sr1, CK_NORMAL);
   nf += srunner_ntests_failed(sr1);
   srunner_free(sr1);
 

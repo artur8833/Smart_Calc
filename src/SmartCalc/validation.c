@@ -7,8 +7,7 @@ int validation(char *str) {
   int j = 0;
   if (len > 255) {
     res = ERROR;
-  } else if ((len == 1) && strchr("0123456789", str[0]) ==
-                               NULL) {  //если один символ и он не число
+  } else if ((len == 1) && strchr("0123456789", str[0]) == NULL) {
     res = ERROR;
   } else if (incorrect_brackets(str) || incorrect_fuc(str) ||
              incorrect_signs(str)) {
@@ -56,7 +55,6 @@ int incorrect_dot(char *str) {
   if (dot_count > 1) {
     res = ERROR;
   }
-  // printf("res_dot==%d\n",res);
   return res;
 }
 
@@ -80,7 +78,6 @@ int incorrect_signs(char *str) {
       res = ERROR;
     }
   }
-  // printf("res_sign==%d\n",res);
   return res;
 }
 
@@ -104,7 +101,6 @@ int incorrect_brackets(char *str) {
   } else {
     res = ERROR;
   }
-  // printf("res_bracket==%d\n",res);
   return res;
 }
 
@@ -142,20 +138,9 @@ int incorrect_fuc(char *str) {
                (strchr("0123456789 -", str[i + 3]) != NULL)) {
       i += 2;
     } else if ((strchr("+-*/^() xX", str[i]) == NULL) &&
-               !char_is_number(str[i])) {  //если попался левый символ
+               !char_is_number(str[i])) {
       res = ERROR;
     }
   }
-  // printf("res_func==%d\n",res);
   return res;
 }
-
-// int main(){
-//     char str[]="tan(1) *+ 2";
-//     // for (int i=0;i<strlen(str);i++){
-//     //     printf("strchr(" ",str)==%s\n",strchr("()",str[i]));
-//     // }
-//     int res=validation(str);
-//     printf("res==%d\n",res);
-//     return 0;
-// }

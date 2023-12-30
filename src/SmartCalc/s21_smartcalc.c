@@ -34,11 +34,8 @@ double s21_calculator(char *str, double x) {
   double result = 0;
   if (strlen(str) != 0) {
     parcer(str, &head_stack, x);
-    // printf("head_stack_after_parce\n");
-    // print(head_stack);
     convert_in_RPN(&head_stack, &rpn);
     result = calculation(&rpn);
-    // print(rpn);
   }
   return result;
 }
@@ -50,7 +47,6 @@ void parcer(char *str, stack **head_stack, double x) {
   int j = 0;
   double num = 0;
   for (int i = 0; i < len; i++) {
-    // printf("str[%d]==%c\n",i,str[i]);
     while (char_is_number(str[i])) {
       numbers_buf[j] = str[i];
       j++;
@@ -143,57 +139,33 @@ void parce_operators(char *str, int *i, stack **head) {
 void convert_in_RPN(stack **head, stack **result) {
   stack *reverses_stack = reverse_stack(*head);
   stack *support = NULL;
-
-  // printf("reverses_stack\n");
-  // print(reverses_stack);
-  while (reverses_stack != NULL) {  // иду по перевернутому стеку
-    // printf("reverses_stack->symbol==%c\n",reverses_stack->symbol);
-    if (reverses_stack->type == 0)  // если приходит число то добавляю его в
-                                    // основной стек и убираю из перевернутого
-    {
+  while (reverses_stack != NULL) {
+    if (reverses_stack->type == 0) {
       append(result, reverses_stack->num, reverses_stack->priority,
              reverses_stack->type, reverses_stack->symbol);
       pop(&reverses_stack);
-    } else if ((*result == NULL) &&
-               (reverses_stack->symbol ==
-                '-')) {  //если результат пуст то добавляю 0 чтобы обработать -9
-                         //в самом начале
+    } else if ((*result == NULL) && (reverses_stack->symbol == '-')) {
       append(result, 0, 0, NUMBERS, ' ');
     } else {
-      if (support == NULL) {  //если вспомогательный стек пуст то добавляю в
-                              //него первый символ
+      if (support == NULL) {
         append(&support, reverses_stack->num, reverses_stack->priority,
                reverses_stack->type, reverses_stack->symbol);
         pop(&reverses_stack);
-      } else if (reverses_stack->type !=
-                 8) {  // если не встретилась закрывающаяся скобка
+      } else if (reverses_stack->type != 8) {
         if ((reverses_stack->symbol == '(') &&
-            (reverses_stack->next_operators->symbol ==
-             '-')) {  // если в скобки перый символ -, то добавляю 0
+            (reverses_stack->next_operators->symbol == '-')) {
           append(result, 0, 0, NUMBERS, ' ');
         }
 
         append(&support, reverses_stack->num, reverses_stack->priority,
-               reverses_stack->type,
-               reverses_stack
-                   ->symbol);  // добавляю в вспомагательный стек текущий символ
+               reverses_stack->type, reverses_stack->symbol);
         pop(&reverses_stack);
 
         if ((support->type != 7)) {
           removeStack(&support->next_operators, result, support->priority);
         }
-
-        // printf("\n");
-        // printf("support\n");
-        // print(support);
-
-        // printf("result\n");
-        // print(*result);
-
-      } else if (reverses_stack->type == 8) {  // если скобка закрывающаяся
-
+      } else if (reverses_stack->type == 8) {
         pop(&reverses_stack);
-        // print(support);
         while ((support != NULL)) {
           if (support->type == 7) {
             pop(&support);
@@ -213,19 +185,13 @@ void convert_in_RPN(stack **head, stack **result) {
            support->symbol);
     pop(&support);
   }
-  // print(*result);
 }
 
 void removeStack(stack **support, stack **head, int current_priority) {
-  // Если список пустой или имеет только один элемент, ничего не делаем
   stack *current = *support;
   stack *previous = NULL;
-  // проходим по вспомогательному массиву и если приоритет следующиго символа
-  // больше текущего, то вытаскиваем его
   while ((current != NULL) && (current->type != 7)) {
     if ((current->priority >= current_priority) && (current->type != 7)) {
-      // printf("current->symbol==%c\n",current->symbol);
-      //  Если удаляемый узел находится в начале списка
       if (previous == NULL) {
         stack *next = current->next_operators;
         append(head, current->num, current->priority, current->type,
@@ -233,9 +199,7 @@ void removeStack(stack **support, stack **head, int current_priority) {
         pop(&current);
         *support = next;
         current = next;
-      }
-      // Если удаляемый узел находится в середине или конце списка
-      else {
+      } else {
         stack *next = current->next_operators;
         append(head, current->num, current->priority, current->type,
                current->symbol);
@@ -252,7 +216,7 @@ void removeStack(stack **support, stack **head, int current_priority) {
 
 stack *reverse_stack(stack *original) {
   stack *reverse = NULL;
-  while (original != NULL) {  //переворачиваю стек
+  while (original != NULL) {
     append(&reverse, original->num, original->priority, original->type,
            original->symbol);
     pop(&original);
@@ -265,17 +229,7 @@ double calculation(stack **rpn) {
   stack *support = NULL;
   double n1, n2, res = 0;
 
-  // printf("rpn_reverse_stack\n");
-  // print(rpn_reverse_stack);
-
   while (rpn_reverse_stack != NULL) {
-    // print(support);
-    // printf("rpn_reverse_stack->symbol==%c\n\n",rpn_reverse_stack->symbol);
-    // printf("rpn_reverse_stack->priority==%d\n\n",rpn_reverse_stack->priority);
-
-    // printf("rpn_reverse_stack\n");
-    // print(rpn_reverse_stack);
-
     if (rpn_reverse_stack->type == 0) {
       append(&support, rpn_reverse_stack->num, rpn_reverse_stack->priority,
              rpn_reverse_stack->type, rpn_reverse_stack->symbol);
@@ -299,15 +253,11 @@ double calculation(stack **rpn) {
         pop(&rpn_reverse_stack);
       }
     }
-
-    // printf("res===%f\n",res);
   }
   if (support != NULL) {
     res = support->num;
     pop(&support);
   }
-  // printf("res===%f\n",res);
-
   return res;
 }
 
@@ -359,41 +309,3 @@ void to_number(char *str, double *num) {
   *num = 0;
   *num = atof(str);
 }
-
-// int main(){
-//     //char str[]="2+4+3-cos(7*4)";
-
-//     char str[]="5";
-//     //char str[]="asin(0.6)+1";
-//     double num=s21_calculator(str,0);
-//     printf("num==%f\n", num);
-
-//     // stack* support = NULL;
-//     // stack* head = NULL;
-//     // append(&head,2,0,0,' ');
-//     // append(&head,3,0,0,' ');
-//     // append(&head,0,2,3,'*');
-//     // append(&head,3,0,0,' ');
-//     // append(&support,0,1,1,'+');
-//     // append(&support,0,4,9,'c');
-//     // append(&support,0,1,7,'(');
-//     // append(&support,0,1,1,'+');
-
-//     // printf("\n");
-//     // print(support);
-//     // print(head);
-
-//     // append(&support,0,2,3,'*');
-
-//     // printf("\n");
-//     // print(support);
-//     // print(head);
-
-//     // removeStack(&support->next_operators,&head,support->priority);
-
-//     // printf("\n");
-//     // print(support);
-//     // print(head);
-
-//     return 0;
-// }
