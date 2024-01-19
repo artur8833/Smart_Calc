@@ -1,245 +1,149 @@
-# SmartCalc v1.0
-
-> При старте работы над проектом просим вас постараться хронометрировать время работы над проектом.
-> По завершении работы над проектом просим вас ответить на два вопроса [в этом опросе](https://forms.gle/MAxcabZjBPmTmhPv5)
-
-Implementation of SmartCalc v1.0.
-
-The russian version of the task can be found in the repository.
-
-
-## Contents
-
-0. [Preamble](#preamble)
-1. [Chapter I](#chapter-i) \
-   1.1. [Introduction](#introduction)
-2. [Chapter II](#chapter-ii) \
-   2.1. [Information](#information)
-3. [Chapter III](#chapter-iii) \
-   3.1. [Part 1](#part-1-implementation-of-smartcalc-v10)  
-   3.2. [Part 2](#part-2-bonus-credit-calculator)  
-   3.3. [Part 3](#part-3-bonus-deposit-calculator)
-
-
-## Preamble
-
-![SmartCalc](misc/eng/images/smartcalc.jpg)
-
-Planet Earth, USA, California, Cupertino, 10260 Bandley Drive, August 5, 1983.
-
-Muffled footsteps quickly approached the room. It was strange, as if the person walking was barefoot. A sudden stop at the door, some inarticulate dialogue apparently with a passerby... the door opens and he enters. As he looks around the room on the go, he quickly grabs a few people out of the crowd that was discussing something and gestured them to follow him.
-
-He speaks as he goes:
-
-*-- Andy, how are things with the greeting?*
-
-*-- Well, the presentation isn’t soon, so I'm sure it'll be ready in time.*
-
-*-- Okay Bill, I need an alpha version of MacPaint by next week, I want to show it to John Sculley*
-
-*-- But it’s development started only two weeks ago.*
-
-*-- That's why I'm giving you another week! Where's Chris? Has anyone seen him?*
-
-Chris Espinosa was outside the door in his office and heard that Jobs was looking for him. The fifth version of the Macintosh calculator had already been written, and he had a feeling that this was just the beginning. Except his morale was about to run out! Suddenly he heard somebody saying *"he seems to be in his office"* and then the swift footsteps of bunch of people rushed in Chris's direction. Fear took hold of him for a moment, but he quickly pulled himself together and came to his senses. After all, it was just a calculator! The door opened and Jobs entered the room, while the rest of people stayed behind the office.
-
-*-- Chris, how's our calculator doing?*
-
-*-- Here look, I fixed everything according to your comments and implemented some ideas of my own.*
-
-*-- Ok, so can it count expressions, taking into account the order of operations? And if you need to make a graph, can it do that too? And what about credits or deposits, can the user get some functionality from your calculator that will help him save dollars? And the interface, frankly, it's not that good.*
-
-Chris realized that the calculator couldn't do any of these things and was completely down. Jobs understood it without words, cheered him up a little and left. You watched everything from the sidelines, and you had a feeling that you have to help him. \
-You waited until everybody had left and then came to him to offer your help:
-
-*- Listen Chris, I have some free time in the evenings. I can help you with the calculator, because I see you are quite frustrated. Redoing the same thing a thousand times over is not a pleasant thing, although it's a big part of our job as programmers.*
-
-He became incredibly happy and immediately brought you up to speed. Well, you saved his job, all that’s left is to implement a calculator!
-
-
 ## Chapter I
 
 ## Introduction
 
-In this project you will implement an extended version of the usual calculator, which can be found in the standard applications of each operating system in the C programming language using structured programming. In addition to basic arithmetic operations such as add/subtract and multiply/divide, you need to supplement the calculator with the ability to calculate arithmetic expressions by following the order, as well as some mathematical functions (sine, cosine, logarithm, etc.).
-
-Besides calculating expressions, it should also support the use of the _x_ variable and the graphing of the corresponding function.
-
-As for other improvements you can consider a credit and deposit calculator.
+В данном проекте Вам предстоит реализовать на языке программирования Си с использованием структурного подхода расширенную версию обычного калькулятора, который можно найти в стандартных приложениях каждой операционной системы. Помимо базовых арифметических операций, как плюс-минус и умножить-поделить, Вам необходимо дополнить калькулятор возможностью вычисления арифметических выражений с учетом приоритетов, а так же некоторыми математическими функциями (синус, косинус, логарифм и т.д.). Помимо вычисления выражений калькулятор так же должен поддерживать использование переменной _x_ и построение графика соответствующей функции. В качестве дополнительных улучшений можно будет рассмотреть кредитный и депозитный калькулятор.
 
 
 ## Chapter II
 
 ## Information
 
-### Historical background
+### Историческая справка
 
-The history of the calculator development begins in the 17th century, and the first prototypes of this device date back to the 6th century BC. The word "calculator" itself comes from the Latin "calculo", which means "to count", "to calculate".
+История развития такого вычислительного механизма как калькулятор начинается в ХVII веке, а первые прообразы этого аппарата существовали в VI столетии до нашей эры. Само слово "калькулятор" происходит от латинского "calculo", что в переводе означает "считаю", "подсчитываю". Но более детальное изучение этимологии этого понятия показывает, что изначально следует говорить о слове "calculus", которое переводится как "камешек". Ведь изначально именно камешки использовались как атрибут для счета.
 
-But If we go deeper in studying the etymology of this word, we see that originally we should speak about the word "calculus", which is translated as "pebble". After all - it was originally the pebbles that were used as an attribute for counting.
+Историю вычислительных машин, в том числе и калькуляторов, традиционно начинают с суммирующей машины Паскаля, созданной в 1643 году Блезом Паскалем, и арифмометра Лейбница, изобретённого в 1673 году немецким математиком Готфридом Вильгельмом Лейбницем.
 
-The history of computing machines, including calculators, traditionally starts with Pascal's adding machine, invented in 1643 by Blaise Pascal, and Leibniz's Stepped reckoner, invented in 1673 by the German mathematician Gottfried Wilhelm Leibniz.
+Суммирующая машина представляла собой ящик со связанными между собой шестеренками, которые поворачивались специальными колесиками, каждому из которых соответствовал один десятичный разряд. Когда одним из колесиков совершался десятый оборот, происходил сдвиг следующей шестеренки на одну позицию, увеличивавший разряд числа. Ответ после проведения математических действий отображался в окошках над колесиками.
 
-The adding machine was a box with linked gears, which were turned by special wheels, each of which corresponded to one decimal digit.
+Через 20 лет Лейбниц создал свой вариант калькулятора, принцип работы которого был таким же как и у суммирующей машины Паскаля - шестеренки и колесики. Однако в калькулятор Лейбница были добавлены движущая часть, которая стала прообразом подвижных кареток будущих настольных калькуляторов, и рукоятка, крутившая ступенчатое колесо, которое в дальнейшем было заменено на цилиндр. Данные добавления позволили существенно ускорить повторяющиеся операции - умножение и деление. Использование калькулятора Лейбница хоть и незначительно упростило процесс вычисления, но дало толчок другим изобретателям - движущая часть и цилиндр калькулятора Лейбница использовались в вычислительных машинах до середины XX века.
 
-When one of the wheels made the tenth turn, there was a shift of the next gear by one position, which increased the digit of the number.
-After doing the mathematical operations the result was displayed in the windows above the wheels.
+Затем в 1957 компанией Casio был выпущен один из первых серийных калькуляторов 14-А. Он выполнял четыре действия арифметики над 14-разрядными десятичными числами. Конструкция использовала реле, весила 140 кг и была выполнена в виде стола с тумбой-вычислительным блоком, клавиатурой и дисплеем, при работе потребляла 300 Вт. Однако, калькуляторы быстро развивались и усложнялись, как и прочие вычислительные машины. В 1965 году компания Wang Laboratories выпустила калькулятор Wang LOCI-2, который мог вычислять логарифмы, Casio представила первый калькулятор со встроенной памятью "Casio 001" (размеры 37x48x25 см, вес 17 кг), а Olivetti выпустила "Programma 101" - первый калькулятор, который мог сохранять программу и многократно выполнять вычисления по ней.
 
-Twenty years later, Leibniz created his own version of the calculator, the principle of which was the same as that of Pascal's adding machine - gears and wheels.
-However, Leibniz's calculator had a moving part, which became the prototype of moving carriages of future desktop calculators, and a handle that turned a stepped wheel, which was later replaced with cylinder.
-These additions made repetitive operations like multiplication and division much faster.
+Малогабаритные настольные и карманные калькуляторы начали выпускаться с 1970 года, после появления интегральных микросхем, резко сокративших размеры, массу и энергопотребление электронных приборов. В 1970 году Sharp и Canon начали продажи калькуляторов, которые можно было держать в руке (весом порядка 800 г). В 1971 появился первый действительно карманный (131x77x37 мм) калькулятор 901B фирмы Bomwar. Он выполнял 4 арифметические операции, имел дисплей на светодиодах и стоил 240 долларов. В 1973 году в продаже появился калькулятор Sharp EL-805, в котором впервые был использован ЖК-дисплей. А уже в 1979 Hewlett Packard выпустила первый калькулятор с алфавитно-цифровым индикатором, программируемый, с возможностью подключения дополнительных модулей - RAM, ROM, устройства чтения штрих-кодов, кассеты с магнитной лентой, флоппи-дисков, принтеров и др.
 
-Although Leibniz's calculator slightly simplified the process of calculation, it gave an impetus to other inventors - the moving part and cylinder of Leibniz's calculator were used in calculating machines until the mid-twentieth century.
+### Польская прямая и обратная нотации
 
-Then in 1957, Casio released one of the first mass-produced calculators - 14-A. It performed four arithmetic operations on 14-digit decimal numbers. The machine used a relay, weighed 140 kg and looked like a table with a computation unit, keyboard and display, using 300 watts.
+Несмотря на безусловное удобство работы с классической формой записи выражений при ручном счёте, при написании программ запросы чаще всего формируются в формате `что делать -> с какими данными совершать операции`. Так, примерно в 1920 Польский логик Ян Лукасевич изобрел префиксную нотацию (в последствии также называемую польской нотацией или прямой польской нотацией) с целью упрощения пропозиционной логики.
 
-However, calculators rapidly evolved and became more complex, just like other calculating machines. In 1965, Wang Laboratories released the Wang LOCI-2 calculator, which could calculate logarithms. Casio launched the first calculator with a memory function - "Casio 001" (37x48x25 cm, weight 17 kg), and Olivetti launched the "Programma 101", the first calculator that could save a program and repeatedly perform calculations on it.
+Рассмотрим способы написания выражений:
 
-Small-sized desktop and pocket calculators started releasing since 1970, after the appearance of integrated circuits, which sharply reduced the size, weight and power consumption of electronic devices. In 1970, Sharp and Canon began selling calculators that could be held in the hand (weighing about 800 grams). In 1971, the first truly pocket-sized (131x77x37 mm) Bomwar 901B calculator appeared. It performed 4 arithmetic operations, had an LED display, and cost $240. In 1973, the Sharp EL-805 calculator was on the market for the first time with an LCD display. In 1979, Hewlett Packard launched the first programmable calculator with an alphanumeric indicator and the ability to connect additional modules - RAM, ROM, barcode reader, cassette tapes, floppy disks, printers, etc.
-
-### Polish notation and reverse Polish notation
-
-Despite the absolute convenience of working with the classical form of writing expressions, when it comes to writing programs, queries are most often formed in the format `what to do -> what data to perform operations with`. So, around 1920, the Polish logician Jan Lukasiewicz invented  prefix notation (later also called Polish notation or normal Polish notation) in order to simplify propositional logic.
-
-Let's take a look at the ways to write expressions:
-
-The expression written in conventional infix notation:
+Выражение, написанное в классической (инфиксной) нотации:
 
 >2 / (3 + 2) * 5
 
-The expression written in Polish prefix notation:
+Выражение, написанное в польской (префиксной) нотации:
 
 >\* (/ 2 (+ 3 2)) 5
 
-Normally parentheses between operations of equal priority are unnecessary and the final expression looks like this:
+Как правило скобки между операциями с одинаковым приоритетом опускаются и итоговая запись выглядит следующим образом:
 
 >\* / 2 (+ 3 2) 5
 
-The Polish notation is widely used in the field of computing, in particular it is used in many stack-oriented programming languages such as PostScript, and for a long time it was the basis for many calculating machines (calculators).
+Польская нотация получила широкое распространение в области вычислительных систем, в частности она используется во многих стековых языках, таких как PostScript, и долгое время являлась основой для многих вычислительных машин (калькуляторов).
 
-In the mid-1950s, the Australian philosopher and computer scientist Charles Hamblin developed reverse polish notation (RPN). Hamblin's work was presented at a conference in June 1957, and published in 1957 and 1962.
+В середине 1950-х австралийским философом и специалистом в области теории вычислительных машин Чарльзом Хэмблином была разработана обратная польская нотация (ОПН). Работа Хэмблина была представлена на конференции в июне 1957, и издана в 1957 и 1962.
 
-The first computers to support reverse Polish notation were the KDF9 from the English Electric Company, announced in 1960 and released in 1963, and the american Burroughs B5000, announced in 1961, released the same in 1963.
+Первыми компьютерами, поддерживающими обратную польскую нотацию, были KDF9 от English Electric Company, анонсированные в 1960 и выпущенные в 1963, и американский Burroughs B5000, анонсированный в 1961, выпущен в том же 1963. 
 
-Friden used the RPN in desktop calculators and introduced the EC-130 in June 1964. In 1968, engineers at Hewlett-Packard developed the 9100A desktop calculator with RPN support. This calculator made reverse Polish notation popular among scientists and engineers, even though the early advertisements for the 9100A did not mention RPN. In 1972 the HP-35 with RPN support became the first scientific pocket calculator.
+Компания Friden перенесла ОПН в настольные калькуляторы, выпустив в июне 1964 модель EC-130. А в 1968 инженеры Hewlett-Packard разработали настольный калькулятор 9100A с поддержкой ОПН. Этот калькулятор сделал обратную польскую нотацию популярной среди учёных и инженеров, даже несмотря на то, что в ранней рекламе 9100A ОПН не упоминалась. В 1972 калькулятор HP-35 с поддержкой ОПН стал первым научным карманным калькулятором.
 
-The RPN was used in the soviet engineering calculator B3-19M (a joint development with the GDR) produced in 1976. All programmable microcalculators produced in USSR up to the end of 1980s, except for "Electronica MK-85" and "Electronica MK-90", used RPN - it was easier to implement and allowed to use less number of commands during programming compared to conventional algebraic notation (program memory amount was always a critical resource in models of that time). RPN was used in russian programmable calculators "Electronica MK-152" and "Electronica MK-161", ensuring they were compatible with programs written for soviet calculators.
+ОПН применялась в советском инженерном калькуляторе Б3-19М (совместная разработка с ГДР), выпущенном в 1976 году. Все выпускаемые в СССР вплоть до конца 1980-х годов программируемые микрокалькуляторы, за исключением «Электроника МК-85» и «Электроника МК-90», использовали ОПН — она проще реализовывалась и позволяла при программировании обходиться меньшим числом команд, в сравнении с обычной алгебраической нотацией (количество программной памяти в моделях того времени всегда было критическим ресурсом). ОПН использовалась в российских программируемых калькуляторах «Электроника МК-152» и «Электроника МК-161», обеспечивая их совместимость с программами, написанными для советских калькуляторов. 
 
-Reverse Polish notation had all the advantages of the progenitor because it removes the need for parentheses which allows to reduce the volume of expressions. This had led to a decrease in the number of commands, when writing computer programs. That is why sometimes Reverse Polish notation is called Reverse bracketless notation.
+Обратная польская нотация имела все преимущества прародителя, позволяя сократить объём выражений благодаря отсутствию необходимости в скобках. Это позволяло сократить число команд при написании компьютерных программ. Благодаря этому свойству, обратную польскую нотацию также иногда называют обратной бесскобочной записью.
 
-The expression written in Reverse Polish (bracketless) notation:
+Пример выражения, написанного в обратной польской (бесскобочной) нотации:
 
 > 2 3 2 + / 5 *
 
-### Dijkstra's algorithm
+### Алгоритм Дейкстры
 
-Edsger Dijkstra invented an algorithm for converting expressions (including functions) from infix to Reverse Polish notation. The algorithm was named the "shunting-yard algorithm", because its operation resembles that of a railroad shunting yard.
+Эдсгер Дейкстра изобрёл алгоритм для преобразования выражений (в том числе функций) из инфиксной в обратную польскую нотацию. Алгоритм получил название «сортировочная станция», за сходство его операций с происходящим на железнодорожных сортировочных станциях. 
 
->Before we look at the algorithm itself, let's make a small remark and introduce the token. A token is the simplest unit of morphological parsing of an expression. So, the expression 2 / (3 + 2) * 5 (the blanks are added for easy perception and do not carry any semantic sense), broken down into tokens, will look like this [2], [/], [(], [3], [+], [2], [)], [*], [5], where [2, 3, 5] are numerical tokens, [/, (, +, ), *] - are tokens-operations.
+>Перед рассмотрением самого алгоритма сделаем небольшую ремарку и введём понятие лексемы. Лексемой будет называться простейшая единица морфологического разбора выражения. Так, разбитое на лексемы выражение 2 / (3 + 2) * 5 (пробелы добавлены для более удобного восприятия и не несут семантического смысла), будет выглядеть следующим образом: [2], [/], [(], [3], [+], [2], [)], [*], [5], где [2, 3, 5] - числовые лексемы, [/, (, +, ), *] - лексемы-операции.
 
-The Shunting-yard algorithm is stack-based. There are two text variables involved in the conversion: the input and the output string. The conversion process uses the stack to store operations not yet added to the output string. The conversion program sequentially reads each token from the input string and on each step does some actions based on which tokens have been read.
+Алгоритм сортировочной станции основан на стеке. В преобразовании участвуют две текстовых переменных: входная и выходная строки. В процессе преобразования используется стек, хранящий ещё не добавленные к выходной строке операции. Преобразующая программа последовательно считывает лексемы из входной строки, выполняя на каждом шаге некоторые действия, зависящие от того, какая лексема была считана.
 
-#### Implementation of the algorithm
+#### Реализация алгоритма
 
-As long as there are unprocessed tokens in the input string, read the next token:
+Пока в исходной строке есть необработанные лексемы, считываем очередную:
 
-If the token is:
-- A number – put it into the output queue
+Если лексема:
+- Число - добавляем в строку вывода.
+- Функция или открывающая скобка - помещаем в стек.
+- Разделитель аргументов функции (например, запятая):         
+    - Перекладываем операторы из стека в выходную очередь пока лексемой на вершине стека не станет открывающая скобка. Если в стеке не окажется открывающей скобки - в выражении допущена ошибка.
+- Оператор (O1):
+    - Пока присутствует на вершине стека лексема-оператор (O2) чей приоритет выше приоритета O1, либо при равенстве приоритетов O1 является левоассоциативным:
+        - Перекладываем O2 из стека в выходную очередь.
+    - Помещаем O1 в стек.
+- Закрывающая скобка:
+    - Пока лексема на вершине стека не станет открывающей скобкой, перекладываем лексемы-операторы из стека в выходную очередь.
+    - Удаляем из стека открывающую скобку.
+    - Если лексема на вершине стека — функция, перекладываем её в выходную очередь.
+    - Если стек закончился до того, как была встречена открывающая скобка - в выражении содержится ошибка.
 
-- A function or a left parenthesis – push it onto the stack
+Если во входной строке больше не осталось лексем:
+- Пока есть операторы в стеке:
+    - Если на вершине стека скобка - в выражении допущена ошибка.
+    - Перекладываем оператор из стека в выходную очередь.
 
-- A function arguments separator (e.g. comma):
-    - Move operators from the stack to the output queue until the token at the top of the stack is a left parenthesis. If there is no left parenthesis in the stack, there is an error in the expression.
-
-- Operator (O1):
-    - While there is an token-operator O2 at the top of the stack, that has greater precedence than O1 or they have the same precedence and O1 is left-associative:
-    - Pop O2 from the stack into the output queue
-    - Push O1 onto the stack
-
-- A right parenthesis:
-    - While the token at the top of the stack is not a left parenthesis, pop the token-operators from the stack into the output queue.
-    - Pop the left parenthesis from the stack and discard it.
-    - If there is a function token at the top of the stack, then pop the function from the stack into the output queue
-    - If the stack ended before the left parenthesis was read, there is an error in the expression.
-
-If there are no more tokens left in the input string:
-- As long as there are operators in the stack:
-    - If there is a parenthesis at the top of the stack - there is an error in the expression.
-    - Pop the operator from the stack onto the output queue
-
-End.
+Конец.
 
 
 ## Chapter III
 
-## Part 1. Implementation of SmartCalc v1.0
+## Part 1. Реализация SmartCalc v1.0
 
-The SmartCalc v1.0 program must be implemented:
+Необходимо реализовать программу SmartCalc v1.0:
 
-- The program must be developed in C language of C11 standard using gcc compiler. You can use any additional QT libraries and modules
-- The program code must be located in the src folder
-- The program must be built with Makefile which contains standard set of targets for GNU-programs: all, install, uninstall, clean, dvi, dist, test, gcov_report. Installation directory could be arbitrary, except the building one
-- The program must be developed according to the principles of structured programming
-- When writing code it is necessary to follow the Google style
-- Prepare full coverage of modules related to calculating expressions with unit-tests using the Check library
-- GUI implementation, based on any GUI library with API for C89/C99/C11 
-<br/>For Linux: GTK+, CEF, Qt
-<br/>For Mac: GTK+, Nuklear, raygui, microui, libagar, libui, IUP, LCUI, CEF, Qt
-- Both integers and real numbers with a dot can be input into the program. You can optionally provide the input of numbers in exponential notation
-- The calculation must be done after you complete entering the calculating expression and press the `=` symbol.
-- Calculating arbitrary bracketed arithmetic expressions in infix notation
-- Calculate arbitrary bracketed arithmetic expressions in infix notation with substitution of the value of the variable _x_ as a number
-- Plotting a graph of a function given by an expression in infix notation with the variable _x_ (with coordinate axes, mark of the used scale and an adaptive grid)
-    - It is not necessary to provide the user with the ability to change the scale
-- Domain and codomain of a function are limited to at least numbers from -1000000 to 1000000
-    - To plot a graph of a function it is necessary to additionally specify the displayed domain and codomain
-- Verifiable accuracy of the fractional part is at least to 7 decimal places
-- Users must be able to enter up to 255 characters
-- Bracketed arithmetic expressions in infix notation must support the following arithmetic operations and mathematical functions:
-    - **Arithmetic operators**:
+- Программа должна быть разработана на языке Си стандарта C11 с использованием компилятора gcc. Допустимо использование дополнительных библиотек и модулей QT
+- Код программы должен находиться в папке src 
+- Сборка программы должна быть настроена с помощью Makefile со стандартным набором целей для GNU-программ: all, install, uninstall, clean, dvi, dist, test, gcov_report. Установка должна вестись в любой другой произвольный каталог
+- Программа должна быть разработана в соответствии с принципами структурного программирования
+- При написании кода необходимо придерживаться Google Style
+- Должно быть обеспечено покрытие unit-тестами модулей, связанных с вычислением выражений, с помощью библиотеки Check
+- Реализация с графическим пользовательским интерфейсом, на базе любой GUI-библиотеки с API для C89/C99/C11 
+<br/>Для Linux: GTK+, CEF, Qt
+<br/>Для Mac: GTK+, Nuklear, raygui, microui, libagar, libui, IUP, LCUI, CEF, Qt
+- На вход программы могут подаваться как целые числа, так и вещественные числа, записанные через точку. По желанию можно обрабатывать ввод чисел в экспоненциальной записи
+- Вычисление должно производиться после полного ввода вычисляемого выражения и нажатия на символ `=`
+- Вычисление произвольных скобочных арифметических выражений в инфиксной нотации
+- Вычисление произвольных скобочных арифметических выражений в инфиксной нотации с подстановкой значения переменной _x_ в виде числа
+- Построение графика функции, заданной с помощью выражения в инфиксной нотации с переменной _x_  (с координатными осями, отметкой используемого масштаба и сеткой с адаптивным шагом)
+    - Не требуется предоставлять пользователю возможность менять масштаб
+- Область определения и область значения функций ограничиваются по крайней мере числами от -1000000 до 1000000
+    - Для построения графиков функции необходимо дополнительно указывать отображаемые область определения и область значения
+- Проверяемая точность дробной части - минимум 7 знаков после запятой
+- У пользователя должна быть возможность ввода до 255 символов
+- Скобочные арифметические выражения в инфиксной нотации должны поддерживать следующие арифметические операции и математические функции:
+    - **Арифметические операторы**:
 
-      | Operator name | Infix notation <br /> (Classic) | Prefix notation <br /> (Polish notation) |  Postfix notation <br /> (Reverse Polish notation) |
-      | --------- | ------ | ------ | ------ |
-      | Brackets | (a + b) | (+ a b) | a b + |
-      | Addition | a + b | + a b | a b + |
-      | Subtraction | a - b | - a b | a b - |
-      | Multiplication | a * b | * a b | a b * |
-      | Division | a / b | / a b | a b \ |
-      | Power | a ^ b | ^ a b | a b ^ |
-      | Modulus | a mod b | mod a b | a b mod |
-      | Unary plus | +a | +a | a+ |
-      | Unary minus | -a | -a | a- |
+        | Название оператора | Инфиксная нотация <br /> (Классическая) | Префиксная нотация <br /> (Польская нотация) |  Постфиксная нотация <br /> (Обратная польская нотация) |
+        | ------ | ------ | ------ | ------ |
+        | Скобки | (a + b) | (+ a b) | a b + |
+        | Сложение | a + b | + a b | a b + |
+        | Вычитание | a - b | - a b | a b - |
+        | Умножение | a * b | * a b | a b * |
+        | Деление | a / b | / a b | a b \ |
+        | Возведение в степень | a ^ b | ^ a b | a b ^ |
+        | Остаток от деления | a mod b | mod a b | a b mod |
+        | Унарный плюс | +a | +a | a+ |
+        | Унарный минус | -a | -a | a- |
 
-      >Note that the multiplication operator contains the obligatory sign `*`. Processing an expression with the omitted `*` sign is optional and is left to the developer's decision
+        >Обратите внимание, что оператор умножения содержит обязательный знак `*`. Обработка выражения с опущенным знаком `*` является необязательной и остается на усмотрение разработчика
 
-    - **Functions**:
+    - **Функции**:
   
-      | Function description | Function |
-      | ------ | ------ |
-      | Computes cosine | cos(x) |
-      | Computes sine | sin(x) |
-      | Computes tangent | tan(x) |
-      | Computes arc cosine | acos(x) |
-      | Computes arc sine | asin(x) |
-      | Computes arc tangent | atan(x) |
-      | Computes square root | sqrt(x) |
-      | Computes natural logarithm | ln(x) |
-      | Computes common logarithm | log(x) |
-
-
-## Part 2. Bonus. Credit calculator
-
-Provide a special mode "credit calculator" (you can take banki.ru and calcus.ru as an example):
-- Input: total credit amount, term, interest rate, type (annuity, differentiated)
-- Output: monthly payment, overpayment on credit, total payment
-
-
-## Part 3. Bonus. Deposit calculator
-
-Provide a special mode "deposit profitability calculator" (you can take banki.ru and calcus.ru as an example):
-- Input: deposit amount, deposit term, interest rate, tax rate, periodicity of payments, capitalization of interest, replenishments list, partial withdrawals list
-- Output: accrued interest, tax amount, deposit amount by the end of the term
-
-
-
-💡 [Tap here](https://forms.yandex.ru/cloud/6418155a6938722388a12878/) **to leave your feedback on the project**. Pedago Team really tries to make your educational experience better.
+        | Описание функции | Функция |   
+        | ---------------- | ------- |  
+        | Вычисляет косинус | cos(x) |   
+        | Вычисляет синус | sin(x) |  
+        | Вычисляет тангенс | tan(x) |  
+        | Вычисляет арккосинус | acos(x) | 
+        | Вычисляет арксинус | asin(x) | 
+        | Вычисляет арктангенс | atan(x) |
+        | Вычисляет квадратный корень | sqrt(x) |
+        | Вычисляет натуральный логарифм | ln(x) | 
+        | Вычисляет десятичный логарифм | log(x) |
